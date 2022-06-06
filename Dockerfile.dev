@@ -1,0 +1,26 @@
+FROM node:16-alpine
+
+# Use the 'node' user to perform the following commands. It is included in the node alpine image. 
+# Otherwise root would be used, and we want to give our containers only the required permissions, so let's use node.
+USER node 
+
+# Create a directory to store our app. /home/node/ already exists in the node alpine image. The -p flag creates any missing parent directories.
+# This step is not mandatory, the directory would be created automatically with WORKDIR if it didn't exist, but just making sure.
+RUN mkdir -p /home/node/app
+
+# Set the directory in which our following commands will be executed in our image.
+# By default, WORKDIR will create whatever directory we specify here and give its ownership to root
+WORKDIR /home/node/app
+
+# Copy our machine's package.json to the image's workdir. Use --chown to change the ownership of the file to the node user and the node group.
+# The node user comes with a node group. Groups are a Linux concept that allows to assign permissions for X files to more than one user.
+# The way chown works is --chown user:group or just --chown user. In this case we are making sure the 'node' group also gets access to package.json,
+# but interestingly enough, 
+COPY --chown=node:node ./package.json ./
+RUN npm install
+
+# Same as above but in this case copy everthing else after doing npm install.
+# This allows us to cache the result of npm install, so we'd only run it if package.json has changed.
+COPY --chown=node:node ./ ./
+ 
+CMD ["npm", "start"]

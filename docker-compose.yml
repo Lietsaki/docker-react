@@ -1,0 +1,22 @@
+version: '3'
+services:
+  react_app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - /home/node/app/node_modules
+      - .:/home/node/app
+
+  react_app_tests:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - /home/node/app/node_modules
+      - .:/home/node/app
+
+    # Override the default startup command of this dockerfile (npm run start)
+    command: ['npm', 'run', 'test']
