@@ -21,6 +21,8 @@ COPY --from=builder /home/node/app/build /usr/share/nginx/html
 
 # No need to specify a startup command as the nginx image already includes one.
 
+# ! We can also express our file in a simpler way. We don't need the USER intruction and the chown flags, those were 
+# ! used in Dockerfile.dev because we needed explicit permissions to access node_modules. 
 # FROM node:alpine as builder
 # WORKDIR /app
 # COPY package.json .

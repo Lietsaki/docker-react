@@ -1,0 +1,13 @@
+language: generic
+sudo: required # sudo permissions are required to run docker
+services:
+  - docker
+
+before_install:
+  - docker build -t ricardosandez/docker-react -f Dockerfile.dev .
+
+script:
+  # Set an env variable 'CI' to true so that 'npm run test' exits immmediately after executing. (See https://create-react-app.dev/docs/running-tests/#continuous-integration)
+  # This must be an env variable in your system, it's not a flag of npm run test.
+  # This is because Travis will not build if the result from running the tests is a code different from 0.
+  - docker run -e CI=true ricardosandez/docker-react npm run test
