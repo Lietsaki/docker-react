@@ -11,3 +11,15 @@ script:
   # This must be an env variable in your system, it's not a flag of npm run test.
   # This is because Travis will not build if the result from running the tests is a code different from 0.
   - docker run -e CI=true ricardosandez/docker-react npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'docker-react'
+  env: 'Dockerreact-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-682978925964'
+  bucker_path: 'docker-react' # path inside the bucket where our app data is stored. Usually the same as the app name.
+  on:
+    branch: main # deploy to aws every time main receives new code 
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
