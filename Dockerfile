@@ -15,6 +15,9 @@ RUN npm run build
 # Another FROM instruction starts a new build stage
 FROM nginx
 
+# AWS Bean stalk searches for an EXPOSE instruction and maps all incoming traffic to it. In this case we expose port 80 because it is nginx's default port.
+EXPOSE 80
+
 # Use --from to specify we want to copy something from a previous named stage. 
 # /usr/share/nginx/html is an existing directory inside nginx containers where they recommend putting static assets (see https://hub.docker.com/_/nginx)
 COPY --from=builder /home/node/app/build /usr/share/nginx/html
@@ -31,4 +34,5 @@ COPY --from=builder /home/node/app/build /usr/share/nginx/html
 # RUN npm run build
  
 # FROM nginx
+# EXPOSE 80
 # COPY --from=builder /app/build /usr/share/nginx/html
