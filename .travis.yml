@@ -16,7 +16,7 @@ deploy:
   provider: elasticbeanstalk
   region: 'us-east-1'
   app: 'docker-react'
-  env: 'Dockerreact-env'
+  env: 'Dockerreact-env-1'
   bucket_name: 'elasticbeanstalk-us-east-1-682978925964'
   bucker_path: 'docker-react' # path inside the bucket where our app data is stored. Usually the same as the app name.
   on:
