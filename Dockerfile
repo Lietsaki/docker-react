@@ -15,7 +15,8 @@ RUN npm run build
 # Another FROM instruction starts a new build stage
 FROM nginx
 
-# AWS Bean stalk searches for an EXPOSE instruction and maps all incoming traffic to it. In this case we expose port 80 because it is nginx's default port.
+# AWS Beanstalk used to search for an EXPOSE instruction to maps all incoming traffic to its port. In this case we expose port 80 because it is nginx's default port.
+# This is no longer needed, as the Linux Platform 2 (the platform in which Beanstalk runs on) requires you to specify this in the compose file.
 EXPOSE 80
 
 # Use --from to specify we want to copy something from a previous named stage. 
